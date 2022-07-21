@@ -1,0 +1,14 @@
+body {
+    overflow-x: hidden;
+}
+
+header {
+
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.about {
+    margin-left: 30px;
+}
