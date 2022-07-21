@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} Login {% endblock %}
+{% block body %}
+<div class="px-4 py-3 my-5"></div>
+<main class="form-signin w-25 m-auto">
+
+    <form method="post">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+
+        <div class="form-floating">
+            {{ form.username }}
+            <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating mt-2">
+            {{ form.password }}
+            <label for="floatingPassword">Password</label>
+        </div>
+        <a href="{% url 'password_reset' %}" style="text-decoration: none;">Forgot password?</a>
+
+        <button class=" w-100 btn btn-lg btn-primary mt-4 mb-2" type="submit">Sign in</button>
+        <a href="{% url 'register' %}" class="link-primary  mt-3" style="text-decoration: none;">Create account </a>
+
+    </form>
+</main>
+{% endblock %}

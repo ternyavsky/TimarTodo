@@ -5,7 +5,7 @@
 
 {% block body %}
 <!--  Превью   -->
-<div class="b-example-divider"></div>
+
 <div class="px-4 py-5 my-5 text-center">
     <img class="d-block mx-auto mb-5" src="{% static 'main/img/logo.jpg' %}" alt="" width="200" height="70">
     <h1 class="display-5 fw-bold">Welcome to TimarTodo</h1>
@@ -13,7 +13,7 @@
         <p class="lead mb-4">Hello, this is TimarTodo. Here you can create diaries, calendars, lesson schedules and much
             more.</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a href="#" type="button" class="btn btn-dark btn-lg px-4 gap-3">Sign in</a>
+            <a href="{% url 'login' %}" type="button" class="btn btn-dark btn-lg px-4 gap-3">Sign in</a>
             <a href="#first" type="button" class="btn btn-outline-primary btn-lg px-4">More...</a>
         </div>
     </div>
@@ -30,7 +30,8 @@
                 <h1 class="display-4 fw-bold lh-1">What is your fantasy capable of?</h1>
                 <p class="lead">Create, experiment, modify your projects and tasks and share with other users!</p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                    <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Create task</button>
+                    <a href="{% url 'login' %}"><button type="button"
+                            class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Create task</button></a>
                     <a href="#about"> <button type="button" class="btn btn-outline-secondary btn-lg px-4">About
                             us</button></a>
                 </div>
