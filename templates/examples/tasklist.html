@@ -1,0 +1,117 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Task List {% endblock %}
+{% block body %}
+<div class="px-4 py-3 my-2"></div>
+<div class="container">
+    <h1 class="display-5 fw-bold text-center">Task List</h1>
+
+    <div class="h-100 w-50 m-auto p-0 bg-light border rounded-3">
+        <h2 class="text-center mt-3">Write a task</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="row m-auto py-3">
+                <div class="col-8 m-auto px-5  ">
+
+                    {{ form.title }}
+                </div>
+                <div class="col-4 m-auto">
+
+                    <button type="submit" class="btn btn-warning mt-2  ">Add Task</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+    <div class=" w-50 m-auto p-0 py-2 my-3 bg-light border rounded-3">
+
+        {% for i in objects %}
+
+
+        <div class="row my-3 mx--10 px--1 m-auto">
+
+            <div class="col-2">
+                <h5 class="display">Date</h5>
+
+                <div class=" alert alert-warning border rounded-3 h-50 " style="padding-left: 11px;">
+
+                    <h5 class="text-center ">{{ i.date|date:"d" }}</h5>
+
+                </div>
+
+            </div>
+
+
+
+
+            <div class="col-6">
+                <h5 class="">Task</h5>
+                <div class=" alert alert-warning border rounded-3 h-50    ">
+                    {% if i.complete == False %}
+                    <h5 class="">{{ i.title }}</h5>
+                    {% else %}
+                    <strike>
+                        <h5>{{ i.title }}</h5>
+                    </strike>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-1 py-5">
+
+                <div class="form-check">
+                    <form method="post">
+                        {{ form.complete }}
+                    </form>
+
+                </div>
+
+
+
+            </div>
+            <div class="col-1 py-5">
+                <a href="#">
+                    <svg xmlns=" http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                        class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path
+                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg>
+                </a>
+
+            </div>
+            <div class="col-1 py-5">
+                <a href="{% url 'delete' i.id %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                        class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path
+                            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                    </svg>
+                </a>
+
+
+
+            </div>
+        </div>
+
+
+        {% endfor %}
+    </div>
+
+
+
+
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}

@@ -1,14 +1,18 @@
 body {
     overflow-x: hidden;
+    left: 0;
 }
 
-header {
-
-    position: fixed;
-    top: 0;
-    width: 100%;
-}
 
 .about {
     margin-left: 30px;
+}
+
+
+
+#flexCheckDefault {
+    transform: scale(2.1);
+    opacity: 0.9;
+    cursor: pointer;
+    margin-top: 7px;
 }

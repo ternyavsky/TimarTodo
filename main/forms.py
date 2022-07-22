@@ -2,6 +2,8 @@ from dataclasses import fields
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
+from .models import Task
+from django.forms import CheckboxInput, ModelForm, TextInput
 class LoginForm(AuthenticationForm):
     class Meta:
         model = User
@@ -43,4 +45,23 @@ class RegistrationForm(UserCreationForm):
             'id': "floatingPassword",
             'placeholder':"Password again"
                     })}
+
+class TaskForm(ModelForm):
+    class Meta:
+        model = Task
+        fields = ['title','complete']
+        widgets = {
+                'title': TextInput(attrs={
+                        'class':'form-control w-100 mt-2',
+                        'type':'search',
+                        'placeholder':'Walk the dog...',
+                        'aria-label':'Search'}),
+                'complete':CheckboxInput(attrs={
+                        'class':"form-check-input",
+                        'type':"checkbox", 
+                        'value ': "", 
+                        'id':"flexCheckDefault"
+                })
+                }
+   
 

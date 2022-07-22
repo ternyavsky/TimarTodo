@@ -6,6 +6,12 @@ urlpatterns = [
     path('support',SupportView.as_view(),name = 'support'),
     path('examples',ExamplesView.as_view(), name = 'examples'),
     path('registration',RegistrationView.as_view(), name = 'register'),
-    path('profile<int:user_id>',ProfileView.as_view(),name = 'profile')
+    path('profile<int:user_id>',ProfileView.as_view(),name = 'profile'),
+    path('tasklist',tasklist, name = 'tasklist'),
+    path('delete<int:id>', delete, name = 'delete'),
+    
+  
+   
+
     
 ]
