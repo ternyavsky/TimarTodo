@@ -19,11 +19,14 @@
                 <div class="col-4 m-auto">
 
                     <button type="submit" class="btn btn-warning mt-2  ">Add Task</button>
+                </form>
+                </div>
 
                 </div>
+                
+                
             </div>
-        </form>
-    </div>
+   
 
 
 
@@ -31,6 +34,7 @@
     <div class=" w-50 m-auto p-0 py-2 my-3 bg-light border rounded-3">
 
         {% for i in objects %}
+
 
 
         <div class="row my-3 mx--10 px--1 m-auto">
@@ -42,8 +46,9 @@
 
                     <h5 class="text-center ">{{ i.date|date:"d" }}</h5>
 
-                </div>
+            
 
+            </div>
             </div>
 
 
@@ -51,7 +56,7 @@
 
             <div class="col-6">
                 <h5 class="">Task</h5>
-                <div class=" alert alert-warning border rounded-3 h-50    ">
+                <div class=" alert alert-success border rounded-3 h-50    ">
                     {% if i.complete == False %}
                     <h5 class="">{{ i.title }}</h5>
                     {% else %}
@@ -74,17 +79,8 @@
 
 
             </div>
-            <div class="col-1 py-5">
-                <a href="#">
-                    <svg xmlns=" http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-pencil" viewBox="0 0 16 16">
-                        <path
-                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                    </svg>
-                </a>
 
-            </div>
-            <div class="col-1 py-5">
+            <div class="col-2 py-5">
                 <a href="{% url 'delete' i.id %}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                         class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -97,16 +93,26 @@
 
             </div>
         </div>
-
-
         {% endfor %}
+
     </div>
 
+    {% if objects %}
+    <div class="row m-auto w-50">
+        <a href="{% url 'deleteall' %}" class="btn btn-danger">Delete all</a>
+        <a href="#" class="btn btn-dark mt-2">Save template</a>
+
+
+
+        {% else %}
+
+        {% endif %}
 
 
 
 
-</div>
+
+    </div>
 
 </div>
 </div>

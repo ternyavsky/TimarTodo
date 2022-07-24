@@ -25,9 +25,9 @@ def tasklist(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            intance = form.save(commit=False)
-            intance.author = request.user
-            intance.save()
+            instance = form.save(commit=False)
+            instance.author = request.user
+            instance.save()
             
             return redirect('tasklist')
     
@@ -39,6 +39,13 @@ def delete(request,id):
     object = Task.objects.get(id=id)
     object.delete()
     return redirect('tasklist') 
+
+def deleteall(request):
+    objects = Task.objects.filter(author_id = request.user)
+    objects.delete()
+    return redirect('tasklist')
+
+
 
    
 

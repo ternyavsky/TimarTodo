@@ -9,6 +9,8 @@ urlpatterns = [
     path('profile<int:user_id>',ProfileView.as_view(),name = 'profile'),
     path('tasklist',tasklist, name = 'tasklist'),
     path('delete<int:id>', delete, name = 'delete'),
+    path('deleteall',deleteall,name='deleteall')
+
     
   
    
