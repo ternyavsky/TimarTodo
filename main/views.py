@@ -1,8 +1,10 @@
 from django.shortcuts import redirect, render
+from django.urls import reverse, reverse_lazy 
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, CreateView, ListView
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.models import User
 
 from main.models import Task
 from .forms import LoginForm, RegistrationForm, TaskForm
@@ -16,6 +18,14 @@ class SupportView(TemplateView):
 class ExamplesView(TemplateView):
     template_name = 'main/examples.html'
 
+
+
+def deleteprofile(request,id):
+    user = User.objects.get(id=id)
+    user.delete()
+    return redirect ('/')
+
+
 def tasklist(request):
     
     
@@ -28,6 +38,7 @@ def tasklist(request):
             instance = form.save(commit=False)
             instance.author = request.user
             instance.save()
+        
             
             return redirect('tasklist')
     
@@ -45,32 +56,17 @@ def deleteall(request):
     objects.delete()
     return redirect('tasklist')
 
-
-
-   
-
-
-
-
-    
-    
-
-        
-      
-
-
 class TaskListView(ListView):
     template_name = 'examples/tasklist.html'
     model = Task
 
   
-        
-
 #Login Views
 class LoginView(LoginView):
     template_name = 'registration/login.html'
     form_class = LoginForm
-
+    
+    
 class RegistrationView(CreateView):
     template_name = 'registration/register.html' 
     form_class = RegistrationForm

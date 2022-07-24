@@ -6,7 +6,9 @@
 <div class="px-4 py-3 "></div>
 <div class="container ">
     <div class="row">
-        <div class="col-3">sd</div>
+        <div class="col-3">
+            <h1 class="display-5">My templates</h1>
+        </div>
         <div class="col-6">
     <div class="text-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="170" height="170" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -15,8 +17,66 @@
           </svg>
 </div>
  <h1 class="display-2 text-center">{{ user.username }}</h1>
+ <div class="row">
+     <div class="col">
+          <label for="exampleFormControlInput1" class="form-label">Username</label>
+
+        <input class="form-control" type="text" placeholder="{{ user.username }}" aria-label="Disabled input example" disabled>
+        <label for="exampleFormControlInput1" class="form-label">First name</label>
+
+        <input class="form-control" type="text" placeholder="{{ user.first_name }}" aria-label="Disabled input example" disabled>
+        <a href="" class="btn btn-success mt-2 w-100 ">Change info</a>
+     </div>
+     <div class="col">
+          <label for="exampleFormControlInput1" class="form-label">Email</label>
+
+        <input class="form-control" type="text" placeholder="{{ user.email }}" aria-label="Disabled input example" disabled>
+        <label for="exampleFormControlInput1" class="form-label">Last name</label>
+
+        <input class="form-control" type="text" placeholder="{{ user.last_name }}" aria-label="Disabled input example" disabled>
+        <button type="button" class="btn btn-danger mt-2 w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Delete
+          </button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLabel">Delete account</h3>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete your account, it will be impossible to restore your data?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                  <a href="{% url 'dp' user.pk %}"><button type="button" class="btn btn-danger">Yes, I'm sure</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
+     </div>
+ </div>
+ <div class="text-center mt-3">
+ <a href="{% url 'logout' %}" class="btn btn-dark w-100">Logout</a>
 </div>
-<div class="col offset-2">sd</div>
+
+</div>
+
+<div class="col offset">
+    <h1 class="display-5 text-center">My statistic</h1>
+    <div class="col">
+        <div class="h-100 p-2 text-bg-success rounded-3">
+          <h2 class="text-center">Data create</h2>
+          <p class="text-center">{{ user.date_joined|date:'d F, Y' }}</p>
+          
+          <button class="btn btn-outline-light" type="button">Example button</button>
+        </div>
+      </div>
+</div>
 </div>
 
 <!-- <svg xmlns="http://www.w3.org/2000/svg" width="170" height="170" fill="currentColor" class="bi bi-person"
