@@ -1,13 +1,16 @@
+from ast import Try
+from xml.dom import NotFoundErr
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy 
 from django.views import View
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.views.generic import TemplateView, CreateView, ListView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
+from django.views.generic.edit import CreateView, UpdateView
 
 from main.models import Task
-from .forms import LoginForm, RegistrationForm, TaskForm
+from .forms import *
 # Create your views here.
 class IndexView(TemplateView):
     template_name = 'main/index.html'
@@ -21,6 +24,7 @@ class ExamplesView(TemplateView):
 
 
 def deleteprofile(request,id):
+    
     user = User.objects.get(id=id)
     user.delete()
     return redirect ('/')
@@ -38,8 +42,6 @@ def tasklist(request):
             instance = form.save(commit=False)
             instance.author = request.user
             instance.save()
-        
-            
             return redirect('tasklist')
     
     context = { 'objects': objects, 'form':form}
@@ -47,9 +49,43 @@ def tasklist(request):
     return render(request,'examples/tasklist.html', context)
 
 def delete(request,id):
-    object = Task.objects.get(id=id)
-    object.delete()
-    return redirect('tasklist') 
+    try:
+        object = Task.objects.get(id=id)
+        object.delete()
+        return redirect('tasklist')
+    except:
+        return HttpResponseNotFound ("<img src='https://http.cat/400'>")
+
+
+
+
+def edit(request, id):
+    try:
+        user = User.objects.get(id=id)
+ 
+        if request.method == "POST":
+            user.username = request.POST.get("username")
+            user.email = request.POST.get("email")
+            user.first_name = request.POST.get('first_name')
+            user.last_name = request.POST.get('last_name')
+            user.save()
+            return HttpResponseRedirect("/")
+        else:
+            return render(request, "main/changeinfo.html", {"user": user})
+    except User.DoesNotExist:
+        return HttpResponseNotFound("<img src='https://http.cat/403'>")
+        
+    
+            
+        
+   
+        
+     
+    
+    
+
+
+         
 
 def deleteall(request):
     objects = Task.objects.filter(author_id = request.user)

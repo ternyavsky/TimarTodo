@@ -1,0 +1,66 @@
+{% extends 'main/base.html' %}
+{% block title %} Change {% endblock %} 
+{% block body %} 
+
+
+<div class="px-4 py-3 "></div>
+<div class="container ">
+    <div class="row">
+        <div class="col-3">
+            <h1 class="display-5">My templates</h1>
+        </div>
+        <div class="col-6">
+    <div class="text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="170" height="170" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+          </svg>
+</div>
+ <h1 class="display-2 text-center">{{ user.username }}</h1>
+ <div class="row">
+     <div class="col">
+        <form method="post" action="">
+            {% csrf_token %}
+          <label for="exampleFormControlInput1" class="form-label">Username</label>
+          <input class="form-control" type="text" placeholder="{{ user.username }}" name="username">
+
+        <label for="exampleFormControlInput1" class="form-label">First name</label>
+        <input class="form-control" type="text" placeholder="{{ user.first_name }}" name="first_name">
+        
+        
+     </div>
+     <div class="col">
+          <label for="exampleFormControlInput1" class="form-label">Email</label>
+          <input class="form-control" type="email" placeholder="{{ user.email }}" name="email">
+        
+        <label for="exampleFormControlInput1" class="form-label">Last name</label>
+        <input class="form-control" type="text" placeholder="{{ user.last_name }}" name="last_name">
+    
+      
+          
+
+     </div>
+     <div class="text-center mt-3">
+       <button type="submit" class="btn btn-success w-100">Change</button>
+     </div>
+ </div>
+</form>
+ 
+
+</div>
+
+<div class="col offset">
+    <h1 class="display-5 text-center">My statistic</h1>
+    <div class="col">
+        <div class="h-100 p-2 text-bg-success rounded-3">
+          <h2 class="text-center">Data create</h2>
+          <p class="text-center">{{ user.date_joined|date:'d F, Y' }}</p>
+          
+          <button class="btn btn-outline-light" type="button">Example button</button>
+        </div>
+      </div>
+</div>
+</div>
+
+
+{% endblock %}

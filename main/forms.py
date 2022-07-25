@@ -3,7 +3,39 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from .models import Task
-from django.forms import CheckboxInput, ModelForm, TextInput
+from django.forms import CharField, CheckboxInput, EmailInput, ModelForm, TextInput
+
+
+
+
+
+class ChangeForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username','email','first_name','last_name']
+        widgets = {
+                'username': forms.TextInput(attrs={
+                        'class':"form-control",
+                        'type':"text",
+                        'name':'username',
+                        
+        }),
+                'email': forms.EmailInput(attrs={
+                        'class':"form-control",
+                        'type':"email",
+                        'name':'email'}),
+                'first_name': forms.TextInput(attrs={
+                        'class':"form-control",
+                        'type':"text",
+                        'name':'first_name' 
+                        }),
+                'last_name': forms.TextInput(attrs={
+                        'class':"form-control",
+                        'type':"text",
+                        'name':'last_name' 
+                })
+        }
+
 class LoginForm(AuthenticationForm):
     class Meta:
         model = User
@@ -63,5 +95,7 @@ class TaskForm(ModelForm):
                         'id':"flexCheckDefault"
                 })
                 }
+
+
    
 
