@@ -8,6 +8,7 @@ from django.views.generic import TemplateView, CreateView, ListView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView, UpdateView
+import requests
 
 from main.models import Task
 from .forms import *
@@ -21,6 +22,27 @@ class SupportView(TemplateView):
 class ExamplesView(TemplateView):
     template_name = 'main/examples.html'
 
+
+def weather(request):
+    key = '9fa3767c8c72bdd4a47e7c82897e6841'
+    url = 'https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=' + key
+
+    all_city = []
+
+    responce = requests.get(url.format('Lipetsk')).json()
+    city_info = {
+            
+            'temp': responce["main"]["temp"],
+            'icon': responce["weather"][0]["icon"],
+            
+        }
+        
+        
+    all_city.append(city_info)
+
+    return render(request,'main/profile.html', {})
+
+    
 
 
 def deleteprofile(request,id):
@@ -108,7 +130,10 @@ class RegistrationView(CreateView):
     form_class = RegistrationForm
     success_url = 'accounts/login'
 
-class ProfileView(TemplateView):
-    template_name = 'main/profile.html'
+def profileview(request,id):
+    
+
+    return render(request,'main/profile.html',)
+
 
 

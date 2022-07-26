@@ -1,12 +1,19 @@
-from dataclasses import fields
+from dataclasses import field, fields
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-from .models import Task
+from .models import City, Task
 from django.forms import CharField, CheckboxInput, EmailInput, ModelForm, TextInput
 
 
-
+class CityForm(forms.ModelForm):
+    class Meta:
+        model = City
+        fields = ['city']
+        widgets = { 'city':forms.TextInput(attrs={ 'class':'form-control',
+                                             'name':'city',
+                                             'placeholder':'Moscow...',
+                                             'type':'text'  })}
 
 
 class ChangeForm(UserCreationForm):
