@@ -59,10 +59,10 @@
                 <div class=" alert alert-success border rounded-3 h-50    ">
                     {% if i.complete == False %}
                     <h5 class="">{{ i.title }}</h5>
-                    {% else %}
-                    <strike>
-                        <h5>{{ i.title }}</h5>
-                    </strike>
+                    {% elif i.complete == True %}
+                    <h5><s>{{i.title}}</s></h5>
+                        
+                    
                     {% endif %}
                 </div>
             </div>

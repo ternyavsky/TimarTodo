@@ -1,6 +1,6 @@
 from dataclasses import field, fields
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UsernameField
 from django.contrib.auth.models import User
 from .models import City, Task
 from django.forms import CharField, CheckboxInput, EmailInput, ModelForm, TextInput
@@ -44,22 +44,39 @@ class ChangeForm(UserCreationForm):
         }
 
 class LoginForm(AuthenticationForm):
+    username = UsernameField(widget=forms.TextInput(attrs={
+        "autofocus": True,
+        'class':'form-control',
+        'type': "text",
+        'id': "floatingInput",
+        'placeholder':"Username",}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        "autocomplete": "current-password",
+        'class':'form-control',
+        'type': "password",
+        'id': "floatingPassword",
+        'placeholder':"Password"}),
+    ) 
     class Meta:
         model = User
         fields = ['username', 'password']
-        widgets = { 'username': forms.TextInput(attrs={
-            'class':'form-control',
-            'type': "text",
-            'id': "floatingInput",
-            'placeholder':"Username",}),
-                    'password':forms.PasswordInput(attrs={
-            'class':'form-control',
-            'type': "password",
-            'id': "floatingPassword",
-            'placeholder':"Password"})
-            }
+        
 
 class RegistrationForm(UserCreationForm):
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        "autocomplete": "new-password",
+        'class':'form-control',
+        'type': "password",
+        'id': "floatingPassword",
+        'placeholder':"Password"}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        "autocomplete": "new-password",
+        'class':'form-control',
+        'type': "password",
+        'id': "floatingPassword",
+        'placeholder':"Password again"
+    }))
+
     class Meta:
         model = User
         fields = ['username','email','password1','password2']
@@ -72,18 +89,7 @@ class RegistrationForm(UserCreationForm):
             'class':'form-control',
             'type':'email',
             'placeholder':'Email',
-            'id': "floatingEmail",}),
-                    'password1':forms.PasswordInput(attrs={
-            'class':'form-control',
-            'type': "password",
-            'id': "floatingPassword",
-            'placeholder':"Password"}),
-                    'password2':forms.PasswordInput(attrs={
-            'class':'form-control',
-            'type': "password",
-            'id': "floatingPassword",
-            'placeholder':"Password again"
-                    })}
+            'id': "floatingEmail",})}
 
 class TaskForm(ModelForm):
     class Meta:
