@@ -1,5 +1,4 @@
-from ast import Try
-from xml.dom import NotFoundErr
+from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views import View
@@ -9,7 +8,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView, UpdateView
 import requests
-
+from django.contrib.auth import authenticate, login, logout
 from main.models import Task
 from .forms import *
 # Create your views here.
@@ -84,6 +83,7 @@ def delete(request,id):
 def edit(request, id):
     try:
         user = User.objects.get(id=id)
+        form = ChangeForm(instance=request.user)
 
         if request.method == "POST":
             user.username = request.POST.get("username")
@@ -93,20 +93,11 @@ def edit(request, id):
             user.save()
             return HttpResponseRedirect('/')
         else:
-            return render(request, "main/changeinfo.html", {"user": user})
+            context = {'user':user,
+                        'form':form}
+            return render(request, "main/changeinfo.html", context)
     except User.DoesNotExist:
         return HttpResponseNotFound("<img src='https://http.cat/403'>")
-
-
-
-
-
-
-
-
-
-
-
 
 
 def deleteall(request):
@@ -120,15 +111,51 @@ class TaskListView(ListView):
 
 
 #Login Views
-class LoginView(LoginView):
-    template_name = 'registration/login.html'
-    form_class = LoginForm
+def loginview(request):
+    form = LoginForm
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request,username=username,password=password)
+        if user is not None:
+            login(request,user)
+            return redirect('support')
+        else:
+            messages.success(request,'No valid login username or password!')
 
 
-class RegistrationView(CreateView):
-    template_name = 'registration/register.html'
-    form_class = RegistrationForm
-    success_url = 'accounts/login'
+
+    context = {'form':form}
+    return render(request,'registration/login.html',context)
+
+
+def reg(request):
+    form = RegistrationForm
+    if request.method == 'POST':
+        
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        
+
+        on = authenticate(request,username=username,password=password1)
+        print(on)
+        if on is not None:
+            messages.success(request,'User already have. Please sign in')
+        else:
+            user = User(username=username,email=email,password=password1)
+            user.save()
+            return redirect('login')
+            
+
+    context = {'form':form}
+
+    return render(request,'registration/register.html',context) 
+    
 
 def profileview(request,id):
 

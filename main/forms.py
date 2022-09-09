@@ -49,32 +49,50 @@ class LoginForm(AuthenticationForm):
         'class':'form-control',
         'type': "text",
         'id': "floatingInput",
-        'placeholder':"Username",}))
+        'placeholder':"Username",
+        'name':'username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         "autocomplete": "current-password",
         'class':'form-control',
         'type': "password",
         'id': "floatingPassword",
-        'placeholder':"Password"}),
+        'placeholder':"Password",
+        'name':'password'}),
     ) 
-    class Meta:
-        model = User
-        fields = ['username', 'password']
+    
         
 
 class RegistrationForm(UserCreationForm):
+
+    email = CharField(widget=forms.EmailInput(attrs={
+        "autofocus": True,
+        'class':'form-control',
+        'type': "email",
+        'id': "floatingInput",
+        'placeholder':"admin@admin.ru",
+        'name':'email'}))
+    username = UsernameField(widget=forms.TextInput(attrs={
+        "autofocus": True,
+        'class':'form-control',
+        'type': "text",
+        'id': "floatingInput",
+        'placeholder':"Username",
+        'name':'username'}))
+
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
         "autocomplete": "new-password",
         'class':'form-control',
         'type': "password",
         'id': "floatingPassword",
-        'placeholder':"Password"}))
+        'placeholder':"Password",
+        'name':'password1'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         "autocomplete": "new-password",
         'class':'form-control',
         'type': "password",
         'id': "floatingPassword",
-        'placeholder':"Password again"
+        'placeholder':"Password again",
+        'name':'password2'
     }))
 
     class Meta:

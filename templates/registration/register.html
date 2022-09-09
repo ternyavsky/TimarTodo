@@ -4,6 +4,19 @@
 
 
 <div class="px-4 py-3 my-5"></div>
+
+{% if messages %}
+
+<ul class="messages">
+    {% for message in messages %}
+   
+        <h4 class="text-center text-danger"> {{message}}</h4>
+       
+        
+    {% endfor %}
+</ul>
+{% endif %}
+
 <h1 class="display-4 mb-3 text-center">Create account</h1>
 <form method="post">
     {% csrf_token %}

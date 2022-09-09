@@ -6,10 +6,7 @@
 <div class="px-4 py-3 "></div>
 <div class="container ">
     <div class="row">
-        <div class="col-3">
-            <h1 class="display-5">My templates</h1>
-        </div>
-        <div class="col-6">
+        
     <div class="text-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="170" height="170" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
@@ -22,19 +19,19 @@
         <form method="post" action="">
             {% csrf_token %}
           <label for="exampleFormControlInput1" class="form-label">Username</label>
-          <input class="form-control" type="text" placeholder="{{ user.username }}" name="username">
+          {{ form.username }}
 
         <label for="exampleFormControlInput1" class="form-label">First name</label>
-        <input class="form-control" type="text" placeholder="{{ user.first_name }}" name="first_name">
+       {{ form.first_name }}
         
         
      </div>
      <div class="col">
           <label for="exampleFormControlInput1" class="form-label">Email</label>
-          <input class="form-control" type="email" placeholder="{{ user.email }}" name="email">
+          {{ form.email }}
         
         <label for="exampleFormControlInput1" class="form-label">Last name</label>
-        <input class="form-control" type="text" placeholder="{{ user.last_name }}" name="last_name">
+       {{ form.last_name }}
     
       
           
@@ -49,17 +46,7 @@
 
 </div>
 
-<div class="col offset">
-    <h1 class="display-5 text-center">My statistic</h1>
-    <div class="col">
-        <div class="h-100 p-2 text-bg-success rounded-3">
-          <h2 class="text-center">Data create</h2>
-          <p class="text-center">{{ user.date_joined|date:'d F, Y' }}</p>
-          
-          <button class="btn btn-outline-light" type="button">Example button</button>
-        </div>
-      </div>
-</div>
+
 </div>
 
 
