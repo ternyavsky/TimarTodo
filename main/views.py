@@ -4,7 +4,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.views.generic import TemplateView, CreateView, ListView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView,PasswordResetView,PasswordResetConfirmView
 from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView, UpdateView
 import requests
@@ -12,6 +12,16 @@ from django.contrib.auth import authenticate, login, logout
 from main.models import Task
 from .forms import *
 # Create your views here.
+
+class CustomPasswordReset(PasswordResetView):
+    template_name = 'registration/password_reset_form.html'
+    form_class = CusPasswordResetForm
+
+class CustomPasswordConfirm(PasswordResetConfirmView):
+    template_name = 'registration/password_reset_confirm.html'
+    form_class = CusPasswordConfirmForm
+    success_url = reverse_lazy('login')
+
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
@@ -49,6 +59,10 @@ def deleteprofile(request,id):
     user = User.objects.get(id=id)
     user.delete()
     return redirect ('/')
+
+def reset_password(request):
+    form = ResetPassword()
+    return render(request,'registration/password_reset_form.html',{'form':form})
 
 
 def tasklist(request):
@@ -91,7 +105,7 @@ def edit(request, id):
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
             user.save()
-            return HttpResponseRedirect('/')
+            return redirect('profile',user.id)
         else:
             context = {'user':user,
                         'form':form}
@@ -121,7 +135,7 @@ def loginview(request):
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
-            return redirect('support')
+            return redirect('profile',user.id)
         else:
             messages.success(request,'No valid login username or password!')
 
@@ -134,23 +148,17 @@ def loginview(request):
 def reg(request):
     form = RegistrationForm
     if request.method == 'POST':
-        
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
-
-        
-
-        on = authenticate(request,username=username,password=password1)
-        print(on)
-        if on is not None:
-            messages.success(request,'User already have. Please sign in')
-        else:
-            user = User(username=username,email=email,password=password1)
-            user.save()
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
             return redirect('login')
-            
+
+        
+
+        
+        else:
+            messages.success(request,'User already have. Please sign in')
+        
 
     context = {'form':form}
 

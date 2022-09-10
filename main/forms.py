@@ -1,9 +1,38 @@
 from dataclasses import field, fields
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UsernameField
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UsernameField, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from .models import City, Task
 from django.forms import CharField, CheckboxInput, EmailInput, ModelForm, TextInput
+
+
+class CusPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        
+        max_length=254,
+        widget=forms.EmailInput(attrs={"autocomplete": "email",
+        'class':'form-control',
+        'placeholder':'name@example.com',
+        'type':'email'}),
+    )
+
+class CusPasswordConfirmForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            "autocomplete": "new-password",
+            'class':'form-control',
+            'type':'password',
+            'placeholder':'Password',
+            'id': "floatingPassword",}),
+        
+    )
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
+            'class':'form-control',
+            'type':'password',
+            'placeholder':'Password again',
+            'id': "floatingPassword",}),
+    )
 
 
 class CityForm(forms.ModelForm):
@@ -60,7 +89,18 @@ class LoginForm(AuthenticationForm):
         'name':'password'}),
     ) 
     
+class ResetPassword(PasswordResetForm):
+    email = forms.EmailField(
         
+        max_length=254,
+        widget=forms.EmailInput(attrs={
+            "autocomplete": "email",
+            'class':'form-control',
+            'type':'email',
+            'placeholder':'name@example.com',
+            'name':'email',
+            'id':'floatingInput'}),
+    )
 
 class RegistrationForm(UserCreationForm):
 
